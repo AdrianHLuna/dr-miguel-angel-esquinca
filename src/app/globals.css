@@ -1,0 +1,194 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+/*
+ * Paleta real de marca (DR. MIGUEL ESQUINCA - PALETA DE COLOR.pdf, 2022,
+ * confirmada idéntica en la versión 2024 de la raíz del repo): un solo tono
+ * vivo (teal #0795A5) con sus tintes/variaciones como estructura secundaria
+ * — no hay un segundo acento saturado que compita (AGENTS.md §5), así que
+ * no aplica la regla de "nunca mezclar 2 acentos vivos". Solo se usa ESTA
+ * combinación (no había una segunda paleta alterna que descartar).
+ */
+:root {
+  --primary: #0795a5; /* teal principal de marca — CTAs, nav activa, "Enfermedades" */
+  --primary-foreground: #ffffff;
+  --secondary: #305f4c; /* verde-teal oscuro de marca — estructural, "Síntomas", alarma */
+  --secondary-foreground: #ffffff;
+  --accent: #52baaa; /* menta de marca — acento mínimo (chips, "Servicios") */
+  --accent-foreground: #04231f;
+  --background: #f5f4f5; /* gris casi blanco de marca, nunca blanco puro */
+  --surface: #ebfcfe; /* azul-hielo de marca, para secciones alternas */
+  --foreground: #0a2327;
+  --muted: #e1eef0;
+  --muted-foreground: #4b6367;
+  --border: #d3e3e5;
+
+  /* Tokens del Hero/CTA oscuros ("lightbox radiográfico") — ver page.tsx */
+  --hero-bg: #03474e; /* teal casi negro de marca */
+  --hero-bg-deep: #022f33;
+  --hero-glow: #28adb5; /* teal secundario de marca, acento vivo #2 (mismo matiz, no compite) */
+  --hero-foreground: #ebfcfe;
+
+  --font-heading: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-hero-bg: var(--hero-bg);
+  --color-hero-bg-deep: var(--hero-bg-deep);
+  --color-hero-glow: var(--hero-glow);
+  --color-hero-foreground: var(--hero-foreground);
+  --font-heading: var(--font-heading);
+  --font-sans: var(--font-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* ─── Identidad de animación: "clínico-diagnóstico" ──────────────────────
+   Un barrido de luz lentísimo (como el escaneo de un negatoscopio) cruza el
+   fondo oscuro del Hero y del CTA final de forma continua — motivo propio
+   de este sitio, distinto de la respiración/pulso o el giro de otros
+   sitios del registro. */
+@keyframes scan-sweep {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+.animate-scan-sweep {
+  animation: scan-sweep 9s linear infinite;
+}
+
+/* Rejilla tenue tipo negatoscopio (lightbox) de fondo en el Hero/CTA. */
+.lightbox-grid {
+  background-image:
+    repeating-linear-gradient(to bottom, rgba(235, 252, 254, 0.06) 0, rgba(235, 252, 254, 0.06) 1px, transparent 1px, transparent 32px),
+    repeating-linear-gradient(to right, rgba(235, 252, 254, 0.045) 0, rgba(235, 252, 254, 0.045) 1px, transparent 1px, transparent 32px);
+}
+
+/* Perforaciones de "rollo de placas" a lo largo del borde de las tarjetas de
+   cifras del Hero (filmstrip) — detalle propio, no decorativo genérico. */
+.filmstrip-card {
+  position: relative;
+  border-radius: 0.75rem;
+}
+.filmstrip-card::before {
+  content: "";
+  position: absolute;
+  inset-block: 10px;
+  left: 6px;
+  width: 4px;
+  background-image: radial-gradient(circle, rgba(235, 252, 254, 0.35) 1.6px, transparent 1.6px);
+  background-size: 4px 11px;
+  background-repeat: repeat-y;
+}
+
+/* Tarjeta "xray": esquinas redondeadas medianas, sin sello circular — el
+   folio y el divisor de "fractura" viven en CardImageHeader.tsx. */
+.xray-card {
+  border-radius: 1.25rem;
+}
+.xray-badge {
+  transition: transform 220ms ease;
+}
+.group:hover .xray-badge {
+  transform: scale(1.08);
+}
+
+/* Línea de "fractura" (divisor quebrado entre imagen y texto de la tarjeta)
+   que se ilumina en hover — motivo propio de CardImageHeader.tsx, análogo
+   ortopédico al trazo EKG de otro sitio del registro, pero mecánicamente
+   distinto (quiebre geométrico, no onda). */
+.crack-divider path {
+  transition: stroke 220ms ease, filter 220ms ease;
+}
+.group:hover .crack-divider path {
+  stroke: var(--primary);
+  filter: drop-shadow(0 0 3px rgba(7, 149, 165, 0.6));
+}
+
+/* Retrato del Hero/About recortado en hexágono ("tuerca/perno ortopédico")
+   en vez del blob orgánico heredado — reemplaza por completo el tratamiento
+   de foto compartido con otros sitios del registro (AGENTS.md §1, hallazgo
+   2026-11-24). Anillo exterior rotando lentísimo da la animación continua. */
+.hex-frame {
+  clip-path: polygon(25% 2%, 75% 2%, 100% 50%, 75% 98%, 25% 98%, 0% 50%);
+}
+.hex-ring {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  animation: hex-spin 40s linear infinite;
+}
+@keyframes hex-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Honeycomb de certificaciones: celdas hexagonales en vez de la tarjeta
+   redonda+texto compartida por todo el proyecto (InstitutionBadge.tsx) —
+   reemplazada en este sitio por completo. */
+.hex-cell {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Banner diagonal del bloque de precio/CTA — corte en ángulo en vez del
+   rectángulo con blobs de luz difuminados compartido entre sitios. */
+.diagonal-banner {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 94%);
+}
+@media (min-width: 768px) {
+  .diagonal-banner {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 88%);
+  }
+}
+
+/* Lista de "Relacionados": fila sin borde con barra de acento que crece
+   desde la izquierda en hover, en vez de la grilla de cajas con borde
+   repetida en el resto del proyecto. */
+.related-row {
+  position: relative;
+  padding-left: 1rem;
+}
+.related-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: 3px;
+  height: 0%;
+  background: var(--primary);
+  transition: height 200ms ease;
+}
+.related-row:hover::before {
+  height: 70%;
+}
