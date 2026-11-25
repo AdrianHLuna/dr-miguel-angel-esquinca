@@ -14,7 +14,7 @@ export default function HeroFloatBadges() {
 
   return (
     <div
-      className="absolute -bottom-3 left-1/2 flex w-[88%] -translate-x-1/2 items-center gap-3 rounded-xl border border-border bg-background/95 px-4 py-3 shadow-xl backdrop-blur"
+      className="absolute -bottom-3 left-1/2 z-10 flex w-[88%] -translate-x-1/2 items-center gap-3 rounded-xl border border-border bg-background/95 px-4 py-3 shadow-xl backdrop-blur"
       style={{ clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)" }}
     >
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white p-1.5">

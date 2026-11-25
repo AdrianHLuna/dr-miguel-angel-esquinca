@@ -40,7 +40,7 @@ export default function DoctorPhoto({ src, alt }: DoctorPhotoProps) {
             src={src as string}
             alt={alt}
             fill
-            className="object-cover"
+            className="object-cover object-[center_75%]"
             sizes="(max-width: 1024px) 100vw, 33vw"
             onError={() => setFailed(true)}
           />

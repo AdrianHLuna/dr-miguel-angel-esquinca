@@ -39,10 +39,7 @@ export const doctor: DoctorProfile = {
   schedule: "Lunes a viernes 10:00am a 1:00pm y 4:30pm a 8:00pm. Sábados 10:00am a 2:00pm.",
   openingHours: ["Mo-Fr 10:00-13:00", "Mo-Fr 16:30-20:00", "Sa 10:00-14:00"],
   acceptingNewPatients: true,
-  // Sin foto real del doctor entregada — se usa el isotipo real de marca
-  // (recortado) como imagen de respaldo para JSON-LD/Open Graph, nunca una
-  // fotografía genérica de stock haciéndose pasar por el doctor.
-  photo: "/brand/icon.png",
+  photo: "/images/hero.JPG",
   bio:
     "El Dr. Miguel Ángel Esquinca Díaz es Traumatólogo y Ortopedista con alta especialidad en Oncología Ortopédica, con consulta en Tuxtla Gutiérrez, Chiapas. A lo largo de más de 10 años de práctica clínica ha atendido a más de 6,000 pacientes y realizado más de 2,000 procedimientos y cirugías, con un enfoque particular en el diagnóstico y tratamiento quirúrgico de tumores óseos, fracturas complejas, lesiones articulares y enfermedades degenerativas del sistema musculoesquelético. Combina la cirugía ortopédica general (prótesis de cadera y rodilla, artroscopia, reemplazos articulares) con el manejo especializado de tumores óseos y displasia fibrosa, un área que requiere formación específica más allá de la ortopedia convencional. Está certificado por el Consejo Mexicano de Ortopedia y Traumatología, egresado de la Universidad Autónoma de Chiapas con formación en especialidad en el Hospital Regional ISSEMYM de la UAEM.",
   philosophy:
